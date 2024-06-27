@@ -332,6 +332,6 @@ jobs:
     if: ${{ always() }}
     runs-on: ubuntu-latest
     steps:
-      - uses: codecov/codecov-action@v3
+      - uses: codecov/codecov-action@v4.0.1
         with:
-          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+          token: ${{ secrets.CODECOV_TOKEN }}
