@@ -14,7 +14,10 @@ class GCounter:
         return sum(self.payload)
 
     def compare(self, other: Self) -> bool:
-        return all(self.payload[i] <= other.payload[i] for i in range(self.replicas_count))
+        return all(
+            self.payload[i] <= other.payload[i]
+            for i in range(self.replicas_count)
+        )
 
     def merge(self, other: Self) -> None:
         for i in range(self.replicas_count):
