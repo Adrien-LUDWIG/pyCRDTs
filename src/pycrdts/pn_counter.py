@@ -1,6 +1,6 @@
 from typing import Self
 
-from .gcounter import GCounter
+from .g_counter import GCounter
 
 
 class PNCounter:
