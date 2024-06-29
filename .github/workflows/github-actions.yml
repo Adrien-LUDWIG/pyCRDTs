@@ -2,19 +2,37 @@ name: build
 on: [push, pull_request, workflow_dispatch]
 jobs:
   test:
-    name: "py312-cover (ubuntu)"
-    runs-on: "ubuntu-latest"
+    name: ${{ matrix.name }}
+    runs-on: ${{ matrix.os }}
     timeout-minutes: 30
     strategy:
       fail-fast: false
+      matrix:
+        include:
+          - name: "check"
+            python: "3.11"
+            toxpython: "python3.11"
+            tox_env: "check"
+            os: "ubuntu-latest"
+          - name: "docs"
+            python: "3.11"
+            toxpython: "python3.11"
+            tox_env: "docs"
+            os: "ubuntu-latest"
+          - name: "py312-cover (ubuntu)"
+            python: "3.12"
+            toxpython: "python3.12"
+            python_arch: "x64"
+            tox_env: "py312-cover"
+            os: "ubuntu-latest"
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
-          python-version: "3.12"
-          architecture: "x64"
+          python-version: ${{ matrix.python }}
+          architecture: ${{ matrix.python_arch }}
       - name: install dependencies
         run: |
           python -mpip install --progress-bar=off -r ci/requirements.txt
@@ -24,9 +42,9 @@ jobs:
           pip list --format=freeze
       - name: test
         env:
-          TOXPYTHON: "python3.12"
+          TOXPYTHON: "${{ matrix.toxpython }}"
         run: >
-          tox -e "py312-cover" -v
+          tox -e ${{ matrix.tox_env }} -v
   finish:
     needs: test
     if: ${{ always() }}
