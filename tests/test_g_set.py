@@ -1,7 +1,7 @@
 from pycrdts.g_set import GSet
 
 
-class TestGCounter:
+class TestGSet:
     def test_add(self):
         # Given
         g_set = GSet()
