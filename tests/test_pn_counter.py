@@ -48,3 +48,17 @@ class TestPNCounter:
         assert pn_counter2.value() == 2
         assert not pn_counter1.compare(pn_counter2)
         assert pn_counter2.compare(pn_counter1)
+
+    def test_str(self) -> None:
+        # Given
+        pn_counter = PNCounter(1, 0)
+        assert str(pn_counter) == "0"
+
+        # When positive
+        pn_counter.increment()
+        assert str(pn_counter) == "1"
+
+        # When negative
+        pn_counter.decrement()
+        pn_counter.decrement()
+        assert str(pn_counter) == "-1"

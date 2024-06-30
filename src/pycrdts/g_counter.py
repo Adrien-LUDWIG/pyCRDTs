@@ -22,3 +22,6 @@ class GCounter:
     def merge(self, other: Self) -> None:
         for i in range(self.replicas_count):
             self.payload[i] = max(self.payload[i], other.payload[i])
+
+    def __str__(self) -> str:
+        return str(self.value())

@@ -27,3 +27,6 @@ class PNCounter:
     def merge(self, other: Self) -> None:
         self.positive_counter.merge(other.positive_counter)
         self.negative_counter.merge(other.negative_counter)
+
+    def __str__(self) -> str:
+        return str(self.value())

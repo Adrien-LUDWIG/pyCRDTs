@@ -30,3 +30,14 @@ class TestGCounter:
         assert g_counter2.value() == 1
         assert not g_counter1.compare(g_counter2)
         assert g_counter2.compare(g_counter1)
+
+    def test_str(self) -> None:
+        # Given
+        g_counter = GCounter(1, 0)
+        assert str(g_counter) == "0"
+
+        # When
+        g_counter.increment()
+
+        # Then
+        assert str(g_counter) == "1"
