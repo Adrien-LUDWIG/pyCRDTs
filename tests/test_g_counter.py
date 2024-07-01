@@ -4,7 +4,7 @@ from pycrdts.g_counter import GCounter
 class TestGCounter:
     def test_increment(self):
         # Given
-        g_counter = GCounter(1, 0)
+        g_counter = GCounter()
         assert g_counter.value() == 0
 
         # When
@@ -15,9 +15,9 @@ class TestGCounter:
 
     def test_merge(self):
         # Given
-        g_counter1 = GCounter(2, 0)
+        g_counter1 = GCounter()
         g_counter1.increment()
-        g_counter2 = GCounter(2, 1)
+        g_counter2 = GCounter()
         g_counter2.increment()
 
         # When
@@ -33,11 +33,11 @@ class TestGCounter:
 
     def test_str(self) -> None:
         # Given
-        g_counter = GCounter(1, 0)
-        assert str(g_counter) == "0"
+        g_counter = GCounter()
+        assert str(g_counter) == "{}"
 
         # When
         g_counter.increment()
 
         # Then
-        assert str(g_counter) == "1"
+        assert str(g_counter) == str({g_counter.id: 1})

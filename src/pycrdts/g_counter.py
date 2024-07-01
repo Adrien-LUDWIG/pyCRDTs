@@ -1,27 +1,31 @@
+from typing import Dict
+from typing import Optional
 from typing import Self
+from uuid import uuid4
 
 
 class GCounter:
-    def __init__(self, replicas_count: int, id: int):
-        self.payload: int = [0] * replicas_count
-        self.replicas_count: int = replicas_count
-        self.id: int = id
+    def __init__(self, id: Optional[uuid4] = None):
+        self.payload: Dict[uuid4, int] = {}
+        self.id: uuid4 = uuid4() if id is None else id
 
     def increment(self) -> None:
+        if self.id not in self.payload:
+            self.payload[self.id] = 0
         self.payload[self.id] += 1
 
     def value(self) -> int:
-        return sum(self.payload)
+        return sum(self.payload.values())
 
     def compare(self, other: Self) -> bool:
-        return all(
-            self.payload[i] <= other.payload[i]
-            for i in range(self.replicas_count)
-        )
+        for id in self.payload:
+            if id not in other.payload or self.payload[id] > other.payload[id]:
+                return False
+        return True
 
     def merge(self, other: Self) -> None:
-        for i in range(self.replicas_count):
-            self.payload[i] = max(self.payload[i], other.payload[i])
+        for id in other.payload:
+            self.payload[id] = max(self.payload.get(id, 0), other.payload[id])
 
     def __str__(self) -> str:
-        return str(self.value())
+        return str(self.payload)

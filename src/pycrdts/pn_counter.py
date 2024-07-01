@@ -1,14 +1,15 @@
+from typing import Optional
 from typing import Self
+from uuid import uuid4
 
 from .g_counter import GCounter
 
 
 class PNCounter:
-    def __init__(self, replicas_count: int, id: int):
-        self.positive_counter: GCounter = GCounter(replicas_count, id)
-        self.negative_counter: GCounter = GCounter(replicas_count, id)
-        self.replicas_count: int = replicas_count
-        self.id: int = id
+    def __init__(self, id: Optional[uuid4] = None):
+        self.id: uuid4 = uuid4() if id is None else id
+        self.positive_counter: GCounter = GCounter(self.id)
+        self.negative_counter: GCounter = GCounter(self.id)
 
     def increment(self) -> None:
         self.positive_counter.increment()
@@ -29,4 +30,4 @@ class PNCounter:
         self.negative_counter.merge(other.negative_counter)
 
     def __str__(self) -> str:
-        return str(self.value())
+        return f"Positive: {self.positive_counter}, Negative: {self.negative_counter}"
