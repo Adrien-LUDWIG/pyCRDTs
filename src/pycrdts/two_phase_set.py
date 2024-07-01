@@ -1,3 +1,4 @@
+from typing import Hashable
 from typing import Self
 
 from .g_set import GSet
@@ -8,14 +9,14 @@ class TwoPhaseSet:
         self.add_set: GSet = GSet()
         self.remove_set: GSet = GSet()
 
-    def add(self, element: int) -> None:
+    def add(self, element: Hashable) -> None:
         self.add_set.add(element)
 
-    def remove(self, element: int) -> None:
+    def remove(self, element: Hashable) -> None:
         if self.add_set.lookup(element):
             self.remove_set.add(element)
 
-    def lookup(self, element: int) -> bool:
+    def lookup(self, element: Hashable) -> bool:
         is_in_add = self.add_set.lookup(element)
         is_not_in_remove = not self.remove_set.lookup(element)
         return is_in_add and is_not_in_remove

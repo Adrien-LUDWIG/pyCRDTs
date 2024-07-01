@@ -1,3 +1,4 @@
+from typing import Hashable
 from typing import Self
 
 
@@ -5,10 +6,10 @@ class GSet:
     def __init__(self):
         self.payload: set = set()
 
-    def add(self, element: int) -> None:
+    def add(self, element: Hashable) -> None:
         self.payload.add(element)
 
-    def lookup(self, element: int) -> bool:
+    def lookup(self, element: Hashable) -> bool:
         return element in self.payload
 
     def compare(self, other: Self) -> bool:
