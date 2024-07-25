@@ -79,6 +79,10 @@ To run all the tests run::
 
     tox
 
+To run only the tests for a specific environment run, e.g. for Python 3.12 with coverage::
+
+    tox -e py312-cover
+
 Note, to combine the coverage data from all the tox environments run:
 
 .. list-table::
